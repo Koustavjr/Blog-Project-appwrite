@@ -5,6 +5,7 @@ import LogoutBtn from './Header/LogoutBtn.jsx'
 import Container from './Container/Container.jsx'
 import Select from './Select.jsx'
 import PostCard from './PostCard.jsx'
+import RTE from './RTE.jsx'
 
 export{
     Header,
@@ -13,5 +14,6 @@ export{
     LogoutBtn,
     Container,
     Select,
-    PostCard
+    PostCard,
+    RTE
 }
