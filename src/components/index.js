@@ -6,6 +6,10 @@ import Container from './Container/Container.jsx'
 import Select from './Select.jsx'
 import PostCard from './PostCard.jsx'
 import RTE from './RTE.jsx'
+import Signup from "./Signup.jsx"
+import Login from "./Login.jsx"
+import PostForm from './post-form/PostForm.jsx'
+import AuthLayer from './AuthLayout.jsx'
 
 export{
     Header,
@@ -15,5 +19,9 @@ export{
     Container,
     Select,
     PostCard,
-    RTE
+    RTE,
+    Signup,
+    Login,
+    PostForm,
+    AuthLayer
 }

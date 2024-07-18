@@ -56,10 +56,10 @@ export class Service
         }
     }
 
-    async getPost(queries=[Query.equal("status","active")])
+    async getPost(slug)
     {
         try {
-            return await this.databases.getDocument(conf.appwriteDatabaseId,conf.appwriteCollectionId,queries);
+            return await this.databases.getDocument(conf.appwriteDatabaseId,conf.appwriteCollectionId,slug);
         }
         catch(error)
         {
@@ -68,6 +68,21 @@ export class Service
             return false;
         }
     }
+
+    async getPosts(queries=[Query.equal("status","active")])
+        {
+            try {
+                return this.databases.listDocuments(
+                    conf.appwriteDatabaseId,
+                    conf.appwriteCollectionId,
+                    queries
+                )
+
+            } catch (error) {
+                console.log("error ",error.message );
+                return false;
+            }
+        }
 
     async deletePost(slug)
     {
