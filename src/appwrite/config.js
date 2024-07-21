@@ -72,7 +72,7 @@ export class Service
     async getPosts(queries=[Query.equal("status","active")])
         {
             try {
-                return this.databases.listDocuments(
+                return await this.databases.listDocuments(
                     conf.appwriteDatabaseId,
                     conf.appwriteCollectionId,
                     queries
@@ -87,7 +87,7 @@ export class Service
     async deletePost(slug)
     {
         try {
-            this.databases.deleteDocument(slug);
+           await this.databases.deleteDocument(slug);
         } catch (error) {
             console.log("Error ",error);
             return false;
@@ -105,7 +105,7 @@ export class Service
                 )
             } catch (error) {
                 console.log("Error ",error);
-                
+                return false
             }
         }
 
@@ -113,13 +113,13 @@ export class Service
         async deleteFile(fileId)
         {
             try {
-                this.bucket.deleteFile(
+              await  this.bucket.deleteFile(
                     conf.appwriteBucketId,
                     fileId
                 )
             } catch (error) {
                 console.log("Error ",error);
-                
+                return false
             }
         }
 

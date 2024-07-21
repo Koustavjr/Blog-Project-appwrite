@@ -21,7 +21,7 @@ export class AuthService{
             
             if(userAccount)
             {
-                return this.login(email,password);
+                return this.login({email,password});
             }
             else
             {
@@ -54,7 +54,7 @@ export class AuthService{
     async logout()
     {
         try {
-            return await this.account.deleteSessions();
+             await this.account.deleteSessions();
         } catch (error) {
             console.log("Error ",error);
         }

@@ -10,6 +10,8 @@ import Signup from "./Signup.jsx"
 import Login from "./Login.jsx"
 import PostForm from './post-form/PostForm.jsx'
 import AuthLayer from './AuthLayout.jsx'
+import Button from './Button.jsx'
+import Input from './Input.jsx'
 
 export{
     Header,
@@ -23,5 +25,7 @@ export{
     Signup,
     Login,
     PostForm,
-    AuthLayer
+    AuthLayer,
+    Button,
+    Input
 }

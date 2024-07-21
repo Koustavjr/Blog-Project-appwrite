@@ -8,7 +8,7 @@ import { Button, Select, Input, RTE } from "../index";
 export default function PostForm({ post }) {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
-  const [register, handleSubmit, watch, setValue, control, getValues] = useForm(
+  const {register, handleSubmit, watch, setValue, control, getValues} = useForm(
     {
       defaultValues: {
         title: post?.title || "",
@@ -39,9 +39,10 @@ export default function PostForm({ post }) {
 
       if (file) {
         const fileId = file.$id;
+        data.featuredImage=fileId;
         const DbPost = await service.createPost({
           ...data,
-          featuredImage: fileId,
+          //featuredImage: fileId,
           userId: userData.$id,
         });
 
@@ -54,16 +55,16 @@ export default function PostForm({ post }) {
     if (value && typeof value === "string") {
       return value
         .trim()
+        .toLowerCase()
         .replace(/[^a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-")
-        .toLowerCase();
+        .replace(/\s/g, "-");
     }
     return "";
   }, []);
 
   React.useEffect(() => {
     const subscribe = watch((value, { name }) => {
-      if (name === "title") setValue("slug", slugTransform(value.title));
+      if (name === "title") setValue("slug", slugTransform(value.title),{shouldValidate:true});
     });
 
     return () => subscribe.unsubscribe();

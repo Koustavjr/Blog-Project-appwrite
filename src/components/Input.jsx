@@ -7,9 +7,10 @@ const Input = React.forwardRef(function Input({
     ...props
 },ref)
 {
+    const id = useId();
+    return(
     <div className="w-full">
 
-    const id = useId();
     {label &&
         <label htmlFor={id}
         className="inline-block mb-1 pl-1"
@@ -23,6 +24,7 @@ const Input = React.forwardRef(function Input({
         {...props}
         />
         </div>
+        )
 }
 
 )

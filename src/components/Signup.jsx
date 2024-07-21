@@ -8,20 +8,20 @@ import { login } from "../store/authSlice"
 
 export default function Signup() {
     const [error,setError]=useState("")
-    const[register,handleSubmit]=useForm()
+    const{register,handleSubmit}=useForm()
     const navigate=useNavigate()
     const dispatch=useDispatch()
 
     const create=async(data)=>{
         setError("")
         try {
-            const userData = authService.Signup(data);
+            const userData = await authService.createAccount(data);
             if(userData)
             {
-                const userData = authService.getCurrentUser()
+                const userData = await authService.getCurrentUser()
               if(userData)  dispatch(login(userData))
+                navigate('/')
             }
-        navigate('/')
         } catch (error) {
             setError(error.message)
         }

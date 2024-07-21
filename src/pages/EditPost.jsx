@@ -9,14 +9,17 @@ export default function EditPost() {
   const [post, setPost] = useState(null)
 
     useEffect(()=>{
+      if(slug){
             service.getPost(slug).then((post)=>{
                 if(post)
                     setPost(post)
-                else
+               })
+              }
+               else
                 {
                     navigate('/')
                 }
-            })
+           
     },[slug,navigate])
 
     return post? (

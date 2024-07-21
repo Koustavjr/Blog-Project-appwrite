@@ -24,19 +24,19 @@ export default function AllPosts() {
         </Container>
       </div>
     );
-  } else {
+  } 
     return (
       <div className="w-full py-8">
         <Container>
           <div className="flex flex-wrap">
             {posts.map((post) => {
               <div className="p-2 w-1/4" key={post.$id}>
-                <PostCard {...posts} />
+                <PostCard {...post} />
               </div>;
             })}
           </div>
         </Container>
       </div>
     );
-  }
+  
 }
