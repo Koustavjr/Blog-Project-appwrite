@@ -19,6 +19,7 @@ export default function Login() {
             if(session)
             {
                 const userData = await authService.getCurrentUser();
+                console.log(userData);
                 if(userData) dispatch(authLogin(userData));
 
                 navigate('/')
@@ -58,12 +59,12 @@ export default function Login() {
         <form onSubmit={handleSubmit(login)} className="mt-8">
             <div className="space-y-4">
                 <Input
-                type="email"
-                placeholder="Enter your email"
                 label="Email"
+                placeholder="Enter your email"
+                type="email"
                 {...register("email",{
                     required:true,
-                    validare:{
+                    validate:{
                         matchPattern:(value)=> /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
                         || "Email doesn't exist"
                     }

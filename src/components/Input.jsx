@@ -1,4 +1,4 @@
-import { useId } from "react";
+import React , { useId } from "react";
 
 const Input = React.forwardRef(function Input({
     label,
@@ -22,6 +22,7 @@ const Input = React.forwardRef(function Input({
         ${className}`}
         ref={ref}
         {...props}
+        id={id}
         />
         </div>
         )

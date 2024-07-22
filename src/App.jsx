@@ -4,7 +4,7 @@ import {Footer,Header} from "./components"
 import { Outlet } from "react-router-dom"
 import { login,logout } from "./store/authSlice"
 import { useDispatch } from "react-redux"
-
+import './App.css'
 
 function App() {
   

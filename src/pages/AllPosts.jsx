@@ -11,6 +11,7 @@ export default function AllPosts() {
         if(posts)
             setPosts(posts.documents)
     })
+   // console.log(posts)
   },[])
 
     return (
@@ -18,11 +19,12 @@ export default function AllPosts() {
         <Container>
             <div className='flex flex-wrap'>
                 {
-                    posts.map((post)=>{
+                    posts.map((post)=>(
+                        
                         <div className='p-2 w-1/4' key={post.$id}>
-                            <PostCard {...posts}/>
+                            <PostCard {...post}/>
                         </div>
-                    })
+                    ))
                 }
             </div>
 

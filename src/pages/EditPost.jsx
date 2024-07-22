@@ -6,13 +6,13 @@ import { useState,useEffect } from "react"
 export default function EditPost() {
   const {slug}=useParams();
   const navigate=useNavigate();
-  const [post, setPost] = useState(null)
+  const [post, setPosts] = useState(null)
 
     useEffect(()=>{
       if(slug){
             service.getPost(slug).then((post)=>{
                 if(post)
-                    setPost(post)
+                    setPosts(post)
                })
               }
                else

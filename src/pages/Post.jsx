@@ -11,6 +11,9 @@ export default function Post(){
     const {slug}= useParams();
     const navigate = useNavigate();
 
+    const userData = useSelector((state)=>state.auth.userData)
+    const isAuthor= post && userData?userData.$id===post.userId:false
+    
     useEffect(()=>{
         if(slug)
         {
@@ -22,7 +25,7 @@ export default function Post(){
                 }
                 else
                     navigate('/')
-        })
+        });
         }
         else
             navigate('/');
@@ -30,7 +33,7 @@ export default function Post(){
     [slug,navigate])
     
     const deletePost= ()=>{
-        service.deletePost(slug).then((status)=>{
+        service.deletePost(post.$id).then((status)=>{
             if(status)
             {
                 service.deleteFile(post.featuredImage)
@@ -38,8 +41,6 @@ export default function Post(){
             }
         })
     }
-    const userData = useSelector((state)=>state.auth.userData)
-       const isAuthor= post && userData?userData.$id===post.userId:false
 
     return post ? (
         <div className="py-8">

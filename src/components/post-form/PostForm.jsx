@@ -6,50 +6,53 @@ import { useNavigate } from "react-router-dom";
 import { Button, Select, Input, RTE } from "../index";
 
 export default function PostForm({ post }) {
-  const userData = useSelector((state) => state.auth.userData);
-  const navigate = useNavigate();
   const {register, handleSubmit, watch, setValue, control, getValues} = useForm(
     {
       defaultValues: {
         title: post?.title || "",
-        slug: post?.slug || "",
+        slug: post?.$id || "",
         content: post?.content || "",
         status: post?.status || "active",
       },
     }
   );
-
+  const userData = useSelector((state) => state.auth.userData);
+  const navigate = useNavigate();
+  
   const submit = async (data) => {
     if (post) {
-      const file = data.image[0]
-        ? await service.uploadFile(data.image[0])
+      const file = data.image[0]? await service.uploadFile(data.image[0])
         : null;
-
       if (file) {
-        await service.deleteFile(post.featuredImage);
+         service.deleteFile(post.featuredImage);
+        
       }
 
       const dbPost = await service.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
       });
-      if (dbPost) navigate(`/post/${dbPost.$id}`);
+      if (dbPost)
+      {
+        navigate(`/post/${dbPost.$id}`)
+      }
     } else {
       const file = await service.uploadFile(data.image[0]);
 
       if (file) {
         const fileId = file.$id;
+        console.log(fileId);
         data.featuredImage=fileId;
-        const DbPost = await service.createPost({
+        const dbPost = await service.createPost({
           ...data,
           //featuredImage: fileId,
           userId: userData.$id,
-        });
+        })
 
-        if (DbPost) navigate(`/post/${dbPost.$id}`);
+        if (dbPost) {navigate(`/post/${dbPost.$id}`);}
       }
     }
-  };
+  }
 
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
@@ -63,11 +66,11 @@ export default function PostForm({ post }) {
   }, []);
 
   React.useEffect(() => {
-    const subscribe = watch((value, { name }) => {
+    const subscription = watch((value, { name }) => {
       if (name === "title") setValue("slug", slugTransform(value.title),{shouldValidate:true});
     });
 
-    return () => subscribe.unsubscribe();
+    return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 
   return (
@@ -83,14 +86,13 @@ export default function PostForm({ post }) {
         />
         <Input
           label="Slug"
-          type="text"
           placeholder="Slug"
           className="mb-4"
           {...register("slug", {
             required: true,
           })}
           onInput={(e) => {
-            setValue("slug", slugTransform(e.target.value));
+            setValue("slug", slugTransform(e.currentTarget.value),{shouldValidate:true});
           }}
         />
         <RTE
@@ -101,7 +103,7 @@ export default function PostForm({ post }) {
         />
       </div>
 
-      <div className="1/3 px-2">
+      <div className="w-1/3 px-2">
         <Input
           label="Featured Image :"
           type="file"
@@ -109,24 +111,25 @@ export default function PostForm({ post }) {
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
-            {post && <div className="w-full mb-4">
+            {post && (<div className="w-full mb-4">
                 <img 
                 src={service.getFilePreview(post.featuredImage)} 
                 alt={post.title}
                 className="rounded-lg"
                 />
+              
             </div> 
-            }
+            )}
 
             <Select 
             options={["active","inactive"]}
             label="Status"
-            classname="mb-4"
+            className="mb-4"
             {...register("status",{required:true})}
 
             />
 
-            <Button type="submit" bg-color={post?"bg-green-300":undefined} classname="w-full">
+            <Button type="submit" bg-color={post?"bg-green-300":undefined} className="w-full">
                 {post?"Update":"Submit"}
 
             </Button>

@@ -19,7 +19,7 @@ export default function Signup() {
             if(userData)
             {
                 const userData = await authService.getCurrentUser()
-              if(userData)  dispatch(login(userData))
+              if(userData)  dispatch(login({userData}))
                 navigate('/')
             }
         } catch (error) {
@@ -53,18 +53,17 @@ export default function Signup() {
                 <Input
                 label="Name"
                 placeholder='Enter Full Name'
-                type="text"
                 {...register('name',{
-                    required:true
+                    required:true,
                 })}
                 />
                    <Input
-                type="email"
                 placeholder="Enter your email"
                 label="Email"
+                type="email"
                 {...register("email",{
                     required:true,
-                    validare:{
+                    validate:{
                         matchPattern:(value)=> /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
                         || "Email doesn't exist"
                     }

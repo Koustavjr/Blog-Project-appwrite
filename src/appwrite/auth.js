@@ -29,6 +29,7 @@ export class AuthService{
             }
            } catch (error) {
                 console.log("Error: ",error);
+                throw error;
            }
     } 
 
@@ -39,6 +40,7 @@ export class AuthService{
 
         } catch (error) {
             console.log("Error ",error);
+            throw error;
         }
     }
 
@@ -49,6 +51,7 @@ export class AuthService{
         } catch (error) {
             console.log("Error ",error);
         }
+        return null;
     }
 
     async logout()
